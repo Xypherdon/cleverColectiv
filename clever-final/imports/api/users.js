@@ -6,7 +6,7 @@ export const Users = new Mongo.Collection('users');
 
 if (Meteor.isServer) {
     Meteor.publish('users', function userPublication() {
-        return Users.find({}, { password: 0 });
+        return Users.find({});
     });
 }
 
@@ -47,5 +47,9 @@ Meteor.methods({
 
             return user._id;
         }
+    },
+    'users.findOne'(_id) {
+        user = Users.findOne(_id);
+        return user;
     },
 });

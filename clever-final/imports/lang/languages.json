@@ -4,7 +4,18 @@
             "welcome": "Welcome to Clever!",
             "emailAddress": "E-mail address",
             "password": "Password",
-            "login": "Login"
+            "login": "Login",
+            "user_locked": "User Locked!",
+            "wrong_password": "Wrong password",
+            "error": "Error"
+        },
+        "profilePage": {
+            "name": "Nume",
+            "role": "Role",
+            "consultingLevel": "Consulting Level",
+            "region": "Region",
+            "skills": "Skills",
+            "empty": "Empty"
         }
     },
     "german": {
@@ -12,7 +23,19 @@
             "welcome": "Wilkommen zu Clever!",
             "emailAddress": "E-mail Addresse",
             "password": "Passwort",
-            "login": "Einloggen"
+            "login": "Einloggen",
+            "user_locked": "Benutzer gesperrt!",
+            "wrong_password": "Falsches Passwort",
+            "error": "Error",
+            "name": "Name"
+        },
+        "profilePage": {
+            "name": "Name",
+            "role": "Rolle",
+            "consultingLevel": "Beratungsniveau",
+            "region": "Region",
+            "skills": "Kompetenzen",
+            "empty": "Leer"
         }
     },
     "romanian": {
@@ -20,7 +43,19 @@
             "welcome": "Bine ati venit la Clever!",
             "emailAddress": "Adresa E-mail",
             "password": "Parola",
-            "login": "Login"
+            "login": "Login",
+            "user_locked": "Utilizator blocat!",
+            "wrong_password": "Parola gresita",
+            "error": "Eroare",
+            "name": "Name"
+        },
+        "profilePage": {
+            "name": "Nume",
+            "role": "Rol",
+            "consultingLevel": "Nivel de consultare",
+            "region": "Regiune",
+            "skills": "Competente",
+            "empty": "Gol"
         }
     }
 }

@@ -8,10 +8,12 @@ import languages from '../lang/languages.json';
 export default class LoginButtons extends Component {
     constructor(props) {
         super(props);
-        this.state = { errorMessage: '', currentUserId: '' };
+        this.state = {
+            errorMessage: '',
+            currentUserId: '',
+            language: this.props.language,
+        };
     }
-
-    componentDidMount() {}
 
     attemptLogin(emailAddress, password, callback) {
         Meteor.call('users.login', emailAddress, password, (error, result) => {
@@ -32,11 +34,20 @@ export default class LoginButtons extends Component {
 
         this.attemptLogin(emailAddress, password, result => {
             if (result === 'user_locked') {
-                this.setState({ errorMessage: 'User Locked!' });
+                this.setState({
+                    errorMessage:
+                        languages[this.state.language].loginPage.user_locked,
+                });
             } else if (result === 'wrong_password') {
-                this.setState({ errorMessage: 'Wrong password!' });
+                this.setState({
+                    errorMessage:
+                        languages[this.state.language].loginPage.wrong_password,
+                });
             } else if (result === 'error') {
-                this.setState({ errorMessage: 'Error' });
+                this.setState({
+                    errorMessage:
+                        languages[this.state.language].loginPage.error,
+                });
             } else {
                 this.setState({ currentUserId: result });
             }
@@ -59,7 +70,8 @@ export default class LoginButtons extends Component {
                             className="form-input"
                             type="text"
                             placeholder={
-                                languages.english.loginPage.emailAddress
+                                languages[this.state.language].loginPage
+                                    .emailAddress
                             }
                         />
                     </div>
@@ -68,14 +80,19 @@ export default class LoginButtons extends Component {
                             ref="passwordInput"
                             className="form-input"
                             type="password"
-                            placeholder="Password"
+                            placeholder={
+                                languages[this.state.language].loginPage
+                                    .password
+                            }
                         />
                     </div>
                     <div>
                         <input
                             className="form-input-submit"
                             type="submit"
-                            value="Login"
+                            value={
+                                languages[this.state.language].loginPage.login
+                            }
                         />
                     </div>
                     <div>

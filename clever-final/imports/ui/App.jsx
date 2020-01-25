@@ -9,10 +9,11 @@ import { Router, Switch, Route, Link, useParams } from 'react-router-dom';
 import LoginButtons from './LoginButtons.jsx';
 import ProfilePage from './ProfilePage.jsx';
 import history from '../router/history.js';
+import languages from '../lang/languages.json';
 
-function ProfileChild() {
+function ProfileChild(props) {
     let { id } = useParams();
-    return <ProfilePage userId={id} />;
+    return <ProfilePage userId={id} language={props.language} />;
 }
 
 export var currentUserId = '';
@@ -20,21 +21,28 @@ export var currentUserId = '';
 class App extends Component {
     constructor(props) {
         super(props);
-    }
-
-    componentDidMount() {
-        this.setState({ language: this.props.language });
+        this.state = { language: this.props.language };
     }
 
     render() {
         return (
             <Router history={history}>
                 <Switch>
-                    <Route path="/profile/:id" children={<ProfileChild />} />
+                    <Route
+                        path="/profile/:id"
+                        children={
+                            <ProfileChild language={this.state.language} />
+                        }
+                    />
                     <Route path="/">
                         <div className="title-div">
-                            <h1>Welcome to Clever!</h1>
-                            <LoginButtons />
+                            <h1>
+                                {
+                                    languages[this.state.language].loginPage
+                                        .welcome
+                                }
+                            </h1>
+                            <LoginButtons language={this.props.language} />
                         </div>
                     </Route>
                 </Switch>
