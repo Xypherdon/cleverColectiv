@@ -1,0 +1,26 @@
+{
+    "english": {
+        "loginPage": {
+            "welcome": "Welcome to Clever!",
+            "emailAddress": "E-mail address",
+            "password": "Password",
+            "login": "Login"
+        }
+    },
+    "german": {
+        "loginPage": {
+            "welcome": "Wilkommen zu Clever!",
+            "emailAddress": "E-mail Addresse",
+            "password": "Passwort",
+            "login": "Einloggen"
+        }
+    },
+    "romanian": {
+        "loginPage": {
+            "welcome": "Bine ati venit la Clever!",
+            "emailAddress": "Adresa E-mail",
+            "password": "Parola",
+            "login": "Login"
+        }
+    }
+}

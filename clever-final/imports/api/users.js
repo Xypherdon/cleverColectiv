@@ -3,31 +3,49 @@ import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 
 export const Users = new Mongo.Collection('users');
+
+if (Meteor.isServer) {
+    Meteor.publish('users', function userPublication() {
+        return Users.find({}, { password: 0 });
+    });
+}
+
 Meteor.methods({
     'users.login'(emailAddress, password) {
-        check(emailAddress, String);
-        check(password, String);
-        const user = Users.findOne({
-            emailAddress: emailAddress,
-        });
+        if (Meteor.isServer) {
+            check(emailAddress, String);
+            check(password, String);
 
-        console.log('User:', user);
+            console.log(emailAddress);
 
-        if (user.locked == true) {
-            return 'user_locked';
-        }
+            const user = Users.findOne({
+                emailAddress: emailAddress,
+            });
 
-        let attemptsFailed = user.attemptsFailed;
+            console.log('User:', user);
 
-        if (attemptsFailed > 3) {
-            Users.upsert({ _id: user._id }, { locked: true });
-            return 'too_many_attempts';
-        }
+            if (!user) {
+                return 'error';
+            }
 
-        if (password !== user.password) {
-            attemptsFailed++;
-            Users.upsert({ _id: user._id }, { attemptsFailed: attemptsFailed });
-            return 'wrong_password';
+            let attemptsFailed = user.attemptsFailed;
+
+            if (attemptsFailed > 3) {
+                return 'user_locked';
+            }
+
+            if (password !== user.password) {
+                attemptsFailed++;
+                Users.update(
+                    { _id: user._id },
+                    { $set: { attemptsFailed: attemptsFailed } }
+                );
+                return 'wrong_password';
+            }
+
+            Users.update({ _id: user._id }, { $set: { online: true } });
+
+            return user._id;
         }
     },
 });
