@@ -1,13 +1,17 @@
+/**
+ * @prettier
+ */
+
 import React from 'react';
 import Hello from './Hello.jsx';
 import Info from './Info.jsx';
+import LoginButtons from './LoginButtons.jsx';
 
 const App = () => (
-  <div>
-    <h1>Welcome to Meteor!</h1>
-    <Hello />
-    <Info />
-  </div>
+    <div className="title-div">
+        <h1>Welcome to Clever!</h1>
+        <LoginButtons />
+    </div>
 );
 
 export default App;
