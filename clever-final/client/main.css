@@ -37,13 +37,14 @@ body {
 
 .form-input-submit {
     border-radius: 8px;
+    margin-left: 5px;
     height: 30px;
     width: 100px;
 }
 
 .user-details-span {
     border-style: solid;
-    border-color: brown;
+    border-color: white;
     border-radius: 20px;
     border-width: 4px;
     padding: 40px;
@@ -55,4 +56,51 @@ body {
 .user-timeline-span {
     float: right;
     background-color: blueviolet;
+}
+
+.language-div {
+    right: 0;
+    bottom: 0;
+    margin: 20px;
+    position: absolute;
+}
+
+.language-button {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.profile-identifier {
+    color: gray;
+    margin-bottom: 0px;
+    font-weight: normal;
+}
+
+.profile-value {
+    margin-top: 0px;
+}
+
+.edit-user-details-span {
+    border-style: solid;
+    border-color: white;
+    border-radius: 20px;
+    border-width: 4px;
+    padding: 40px;
+    width: 50%;
+    float: left;
+    text-align: left;
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%);
+    width: 60%;
+    max-width: 300px;
 }

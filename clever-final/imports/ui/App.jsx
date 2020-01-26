@@ -21,32 +21,66 @@ export var currentUserId = '';
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { language: this.props.language };
+        this.state = { language: 'english' };
     }
-
+    changeLanguage(language) {
+        this.setState({ language: language });
+    }
     render() {
         return (
-            <Router history={history}>
-                <Switch>
-                    <Route
-                        path="/profile/:id"
-                        children={
-                            <ProfileChild language={this.state.language} />
-                        }
-                    />
-                    <Route path="/">
-                        <div className="title-div">
-                            <h1>
-                                {
-                                    languages[this.state.language].loginPage
-                                        .welcome
+            <div>
+                <div>
+                    <Router history={history}>
+                        <Switch>
+                            <Route
+                                path="/profile/:id"
+                                children={
+                                    <ProfileChild
+                                        language={this.state.language}
+                                    />
                                 }
-                            </h1>
-                            <LoginButtons language={this.props.language} />
-                        </div>
-                    </Route>
-                </Switch>
-            </Router>
+                            />
+                            <Route path="/">
+                                <div className="title-div">
+                                    <h1>
+                                        {
+                                            languages[this.state.language]
+                                                .loginPage.welcome
+                                        }
+                                    </h1>
+                                    <LoginButtons
+                                        language={this.state.language}
+                                    />
+                                </div>
+                            </Route>
+                        </Switch>
+                    </Router>
+                </div>
+                <div className="language-div">
+                    <span className="language-button">
+                        <button
+                            className="language-button"
+                            onClick={() => this.changeLanguage('english')}
+                        >
+                            {languages[this.state.language].languages.english}
+                        </button>
+                        <span> | </span>
+                        <button
+                            className="language-button"
+                            onClick={() => this.changeLanguage('german')}
+                        >
+                            {languages[this.state.language].languages.german}
+                        </button>
+                        <span> | </span>
+                        <button
+                            className="language-button"
+                            onClick={() => this.changeLanguage('romanian')}
+                        >
+                            {languages[this.state.language].languages.romanian}
+                        </button>
+                    </span>
+                </div>
+            </div>
         );
     }
 }

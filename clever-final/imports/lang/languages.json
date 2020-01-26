@@ -10,12 +10,23 @@
             "error": "Error"
         },
         "profilePage": {
+            "firstName": "First name",
+            "lastName": "Last name",
             "name": "Nume",
             "role": "Role",
             "consultingLevel": "Consulting Level",
             "region": "Region",
             "skills": "Skills",
-            "empty": "Empty"
+            "empty": "Empty",
+            "modalTitle": "Edit Your Profile",
+            "edit": "Edit",
+            "sendRequest": "Send request",
+            "cancel": "Cancel"
+        },
+        "languages": {
+            "english": "English",
+            "german": "German",
+            "romanian": "Romanian"
         }
     },
     "german": {
@@ -30,12 +41,23 @@
             "name": "Name"
         },
         "profilePage": {
+            "firstName": "Vorname",
+            "lastName": "Nachname",
             "name": "Name",
             "role": "Rolle",
             "consultingLevel": "Beratungsniveau",
             "region": "Region",
             "skills": "Kompetenzen",
-            "empty": "Leer"
+            "empty": "Leer",
+            "modalTitle": "Verandern Sie ihren Profil",
+            "edit": "Verandern",
+            "sendRequest": "Anfrage schicken",
+            "cancel": "Ablehnen"
+        },
+        "languages": {
+            "english": "Englisch",
+            "german": "Deutsch",
+            "romanian": "Rumanisch"
         }
     },
     "romanian": {
@@ -50,12 +72,23 @@
             "name": "Name"
         },
         "profilePage": {
+            "firstName": "Prenume",
+            "lastName": "Nume",
             "name": "Nume",
             "role": "Rol",
             "consultingLevel": "Nivel de consultare",
             "region": "Regiune",
             "skills": "Competente",
-            "empty": "Gol"
+            "empty": "Gol",
+            "modalTitle": "Modificati-va profilul",
+            "edit": "Modifica",
+            "sendRequest": "Trimite cerere",
+            "cancel": "Renunta"
+        },
+        "languages": {
+            "english": "Engleza",
+            "german": "Germana",
+            "romanian": "Romana"
         }
     }
 }

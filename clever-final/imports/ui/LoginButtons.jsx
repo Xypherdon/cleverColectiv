@@ -15,6 +15,16 @@ export default class LoginButtons extends Component {
         };
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps !== this.props) {
+            if (this.props.language) {
+                this.setState({
+                    language: this.props.language,
+                });
+            }
+        }
+    }
+
     attemptLogin(emailAddress, password, callback) {
         Meteor.call('users.login', emailAddress, password, (error, result) => {
             if (error) console.log(error);
