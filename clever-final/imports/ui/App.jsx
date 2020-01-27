@@ -15,17 +15,35 @@ import AdminPage from './AdminPage.jsx';
 
 function ProfileChild(props) {
     let { id } = useParams();
-    return <ProfilePage userId={id} language={props.language} />;
+    return (
+        <ProfilePage
+            userId={id}
+            currentUser={props.currentUser}
+            language={props.language}
+        />
+    );
 }
 
 function RequestsChild(props) {
     let { id } = useParams();
-    return <RequestsPage userId={id} language={props.language} />;
+    return (
+        <RequestsPage
+            userId={id}
+            currentUser={props.currentUser}
+            language={props.language}
+        />
+    );
 }
 
 function AdminChild(props) {
     let { id } = useParams();
-    return <AdminPage userId={id} language={props.language} />;
+    return (
+        <AdminPage
+            userId={id}
+            currentUser={props.currentUser}
+            language={props.language}
+        />
+    );
 }
 
 export var currentUserId = '';
@@ -33,11 +51,16 @@ export var currentUserId = '';
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { language: 'english' };
+        this.state = { language: 'english', currentUser: null };
     }
     changeLanguage(language) {
         this.setState({ language: language });
     }
+
+    setCurrentUser(currentUser) {
+        this.setState({ currentUser: currentUser });
+    }
+
     render() {
         return (
             <div>
@@ -49,6 +72,7 @@ class App extends Component {
                                 children={
                                     <RequestsChild
                                         language={this.state.language}
+                                        currentUser={this.state.currentUser}
                                     />
                                 }
                             />
@@ -57,6 +81,7 @@ class App extends Component {
                                 children={
                                     <ProfileChild
                                         language={this.state.language}
+                                        currentUser={this.state.currentUser}
                                     />
                                 }
                             />
@@ -65,6 +90,7 @@ class App extends Component {
                                 children={
                                     <AdminChild
                                         language={this.state.language}
+                                        currentUser={this.state.currentUser}
                                     />
                                 }
                             />
@@ -75,6 +101,9 @@ class App extends Component {
                                     </h1>
                                     <LoginButtons
                                         language={this.state.language}
+                                        setCurrentUser={this.setCurrentUser.bind(
+                                            this
+                                        )}
                                     />
                                 </div>
                             </Route>

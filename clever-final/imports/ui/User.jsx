@@ -17,6 +17,7 @@ export default class User extends Component {
             user: this.props.user,
             key: this.props.key,
             editUser: false,
+            currentUser: this.props.currentUser,
         };
     }
 
@@ -31,10 +32,30 @@ export default class User extends Component {
     editUser() {
         this.setState({ editUser: true });
     }
+    deleteUser() {
+        Meteor.call('users.remove', this.state.user._id);
+    }
+
+    unlock() {
+        Meteor.call('users.update', this.state.user._id, { attemptsFailed: 0 });
+    }
+
+    resetPassword() {
+        const newPassword = ReactDOM.findDOMNode(
+            this.refs.passwordChangeInput
+        ).value.trim();
+
+        if (newPassword) {
+            Meteor.call('users.update', this.state.user._id, {
+                password: newPassword,
+            });
+            ReactDOM.findDOMNode(this.refs.passwordChangeInput).value = '';
+        }
+    }
 
     render() {
-        console.log('state', this.state);
         if (this.state.editUser) {
+            history.push(`/admin/${this.props.currentUser._id._str}`);
             return <Redirect to={`/profile/${this.state.user._id._str}`} />;
         }
         return (
@@ -46,12 +67,38 @@ export default class User extends Component {
                     {this.state.user.role}{' '}
                 </span>
                 <span>id: {this.state.user._id._str}</span>
-                <button
-                    className="form-input-submit"
-                    onClick={this.editUser.bind(this)}
-                >
-                    {languages[this.state.language].edit}
-                </button>
+                <div>
+                    <button
+                        className="form-input-submit"
+                        onClick={this.editUser.bind(this)}
+                    >
+                        {languages[this.state.language].edit}
+                    </button>
+                    <button
+                        className="form-input-submit"
+                        onClick={this.deleteUser.bind(this)}
+                    >
+                        {languages[this.state.language].delete}
+                    </button>
+                    <button
+                        onClick={this.unlock.bind(this)}
+                        className="form-input-submit"
+                    >
+                        {languages[this.state.language].unlock}
+                    </button>
+                    <button
+                        onClick={this.resetPassword.bind(this)}
+                        className="form-input-submit"
+                    >
+                        {languages[this.state.language].resetPassword}
+                    </button>
+                    <input
+                        type="password"
+                        className="password-change-input"
+                        ref="passwordChangeInput"
+                        placeholder={languages[this.state.language].newPassword}
+                    />
+                </div>
             </li>
         );
     }

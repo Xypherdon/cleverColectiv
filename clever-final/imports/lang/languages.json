@@ -30,7 +30,11 @@
         "new": "new",
         "requestsEmpty": "No more requests",
         "createUser": "Create User",
-        "supervisorId": "Supervisor ID"
+        "supervisorId": "Supervisor ID",
+        "unlock": "Unlock",
+        "resetPassword": "Reset password",
+        "newPassword": "New Password",
+        "delete": "Delete"
     },
     "german": {
         "welcome": "Wilkommen zu Clever!",
@@ -64,7 +68,11 @@
         "new": "new",
         "requestsEmpty": "Keine Anfragen verfugbar",
         "createUser": "Benutzer Erstellen",
-        "supervisorId": "Das ID der Supervisor"
+        "supervisorId": "Das ID der Supervisor",
+        "unlock": "Entsperren",
+        "resetPassword": "Neues Passwort",
+        "newPassword": "Neues Passwort",
+        "delete": "Loschen"
     },
     "romanian": {
         "welcome": "Bine ati venit la Clever!",
@@ -98,6 +106,10 @@
         "new": "nou",
         "requestsEmpty": "Nu exista cereri valabile",
         "createUser": "Creeaza Utilizator",
-        "supervisorId": "Id-ul supraveghetorului"
+        "supervisorId": "Id-ul supraveghetorului",
+        "unlock": "Deblocheaza",
+        "resetPassword": "Reseteaza parola",
+        "newPassword": "Noua parola",
+        "delete": "Sterge"
     }
 }

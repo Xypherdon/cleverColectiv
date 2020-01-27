@@ -12,8 +12,6 @@ if (Meteor.isServer) {
 
 Meteor.methods({
     'requests.insert'(request, user) {
-        console.log('eyy3', request, user);
-
         Requests.insert({
             userId: user._id,
             status: 'pending',

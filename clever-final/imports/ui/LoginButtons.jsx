@@ -12,6 +12,7 @@ export default class LoginButtons extends Component {
             errorMessage: '',
             currentUserId: '',
             language: this.props.language,
+            setCurrentUser: this.props.setCurrentUser,
         };
     }
 
@@ -28,6 +29,7 @@ export default class LoginButtons extends Component {
     attemptLogin(emailAddress, password, callback) {
         Meteor.call('users.login', emailAddress, password, (error, result) => {
             if (error) console.log(error);
+
             callback(result);
         });
     }
@@ -56,6 +58,7 @@ export default class LoginButtons extends Component {
                     errorMessage: languages[this.state.language].error,
                 });
             } else {
+                this.state.setCurrentUser(result);
                 this.setState({ user: result });
             }
         });

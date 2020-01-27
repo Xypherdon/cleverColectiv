@@ -46,13 +46,15 @@ Meteor.methods({
         return user;
     },
     'users.findOne'(_id) {
-        user = Users.findOne(_id);
-        return user;
+        return Users.findOne(_id);
     },
     'users.update'(_id, updateData) {
         Users.update(_id, { $set: updateData });
     },
     'users.insert'(user) {
         Users.insert(user);
+    },
+    'users.remove'(_id) {
+        Users.remove(_id);
     },
 });
