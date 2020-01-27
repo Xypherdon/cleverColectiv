@@ -125,3 +125,20 @@ body {
     text-align: center;
     margin-bottom: 5px;
 }
+
+.skill-page-left {
+    float: left;
+    max-width: 50%;
+}
+
+.skill-page-right {
+    float: right;
+    width: 50%;
+}
+.pie-chart-text {
+    float: right;
+}
+
+.pie-chart {
+    float: right;
+}

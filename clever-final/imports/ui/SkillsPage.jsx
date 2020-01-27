@@ -10,6 +10,7 @@ import User from './User.jsx';
 import { Mongo } from 'meteor/mongo';
 import Project from './Project.jsx';
 import Skill from './Skill.jsx';
+import PieChart from 'react-minimal-pie-chart';
 
 class SkillsPage extends Component {
     constructor(props) {
@@ -19,6 +20,7 @@ class SkillsPage extends Component {
             currentUser: this.props.currentUser,
             searchValue: '',
             users: [],
+            skills: {},
         };
     }
 
@@ -32,6 +34,7 @@ class SkillsPage extends Component {
                 this.setState({ language: this.props.language });
             }
             if (this.props.users) {
+                this.loadSkills();
                 this.setState({
                     users: this.props.users,
                 });
@@ -82,18 +85,73 @@ class SkillsPage extends Component {
         ));
     }
 
+    loadSkills() {
+        this.props.users.forEach(user => {
+            for (let skill in user.skills) {
+                if (!this.state.skills[user.skills[skill]]) {
+                    this.state.skills[user.skills[skill]] = 1;
+                } else {
+                    this.state.skills[user.skills[skill]]++;
+                }
+            }
+        });
+    }
+
+    getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    renderPieChart() {
+        return Object.entries(this.state.skills).map(
+            ([key, value], uniqueKey) => {
+                return {
+                    title: key,
+                    value: value,
+                    color: this.getRandomColor(),
+                };
+            }
+        );
+    }
+
+    renderPieChartText(data) {
+        return data.map(skill => {
+            return <h5 style={{ color: skill.color }}>{skill.title}</h5>;
+        });
+    }
+
     render() {
+        console.log(this.state);
+
+        let pieChartData = this.renderPieChart();
+        let pieChartText = this.renderPieChartText(pieChartData);
         return (
-            <div>
-                <input
-                    type="text"
-                    ref="searchInput"
-                    className="form-input"
-                    onChange={this.handleChange.bind(this)}
-                    placeholder={languages[this.state.language].searchSkill}
-                ></input>
-                <ul>{this.renderUsers()}</ul>
-            </div>
+            <span>
+                <span className="skill-page-left">
+                    <div>
+                        <input
+                            type="text"
+                            ref="searchInput"
+                            className="form-input"
+                            onChange={this.handleChange.bind(this)}
+                            placeholder={
+                                languages[this.state.language].searchSkill
+                            }
+                        />
+                        <ul>{this.renderUsers()}</ul>
+                    </div>
+                </span>
+                <span className="skill-page-right">
+                    <span className="pie-chart-text">{pieChartText}</span>
+                    <span className="pie-chart">
+                        <PieChart label={true} data={pieChartData} />
+                    </span>
+                </span>
+            </span>
         );
     }
 }
