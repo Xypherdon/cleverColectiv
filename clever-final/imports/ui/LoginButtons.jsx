@@ -45,28 +45,31 @@ export default class LoginButtons extends Component {
         this.attemptLogin(emailAddress, password, result => {
             if (result === 'user_locked') {
                 this.setState({
-                    errorMessage:
-                        languages[this.state.language].loginPage.user_locked,
+                    errorMessage: languages[this.state.language].user_locked,
                 });
             } else if (result === 'wrong_password') {
                 this.setState({
-                    errorMessage:
-                        languages[this.state.language].loginPage.wrong_password,
+                    errorMessage: languages[this.state.language].wrong_password,
                 });
             } else if (result === 'error') {
                 this.setState({
-                    errorMessage:
-                        languages[this.state.language].loginPage.error,
+                    errorMessage: languages[this.state.language].error,
                 });
             } else {
-                this.setState({ currentUserId: result });
+                this.setState({ user: result });
             }
         });
     }
     render() {
-        if (this.state.currentUserId) {
-            history.push('/');
-            return <Redirect to={`profile/${this.state.currentUserId._str}`} />;
+        if (this.state.user) {
+            if (this.state.user.role === 'Administrator') {
+                history.push('/');
+                return <Redirect to={`/admin/${this.state.user._id._str}`} />;
+            }
+            if (this.state.user._id) {
+                history.push('/');
+                return <Redirect to={`/profile/${this.state.user._id._str}`} />;
+            }
         }
         return (
             <div>
@@ -80,8 +83,7 @@ export default class LoginButtons extends Component {
                             className="form-input"
                             type="text"
                             placeholder={
-                                languages[this.state.language].loginPage
-                                    .emailAddress
+                                languages[this.state.language].emailAddress
                             }
                         />
                     </div>
@@ -91,8 +93,7 @@ export default class LoginButtons extends Component {
                             className="form-input"
                             type="password"
                             placeholder={
-                                languages[this.state.language].loginPage
-                                    .password
+                                languages[this.state.language].password
                             }
                         />
                     </div>
@@ -100,9 +101,7 @@ export default class LoginButtons extends Component {
                         <input
                             className="form-input-submit"
                             type="submit"
-                            value={
-                                languages[this.state.language].loginPage.login
-                            }
+                            value={languages[this.state.language].login}
                         />
                     </div>
                     <div>

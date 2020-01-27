@@ -10,10 +10,22 @@ import LoginButtons from './LoginButtons.jsx';
 import ProfilePage from './ProfilePage.jsx';
 import history from '../router/history.js';
 import languages from '../lang/languages.json';
+import RequestsPage from './RequestsPage.jsx';
+import AdminPage from './AdminPage.jsx';
 
 function ProfileChild(props) {
     let { id } = useParams();
     return <ProfilePage userId={id} language={props.language} />;
+}
+
+function RequestsChild(props) {
+    let { id } = useParams();
+    return <RequestsPage userId={id} language={props.language} />;
+}
+
+function AdminChild(props) {
+    let { id } = useParams();
+    return <AdminPage userId={id} language={props.language} />;
 }
 
 export var currentUserId = '';
@@ -33,6 +45,14 @@ class App extends Component {
                     <Router history={history}>
                         <Switch>
                             <Route
+                                path="/requests/:id"
+                                children={
+                                    <RequestsChild
+                                        language={this.state.language}
+                                    />
+                                }
+                            />
+                            <Route
                                 path="/profile/:id"
                                 children={
                                     <ProfileChild
@@ -40,13 +60,18 @@ class App extends Component {
                                     />
                                 }
                             />
+                            <Route
+                                path="/admin/:id"
+                                children={
+                                    <AdminChild
+                                        language={this.state.language}
+                                    />
+                                }
+                            />
                             <Route path="/">
                                 <div className="title-div">
                                     <h1>
-                                        {
-                                            languages[this.state.language]
-                                                .loginPage.welcome
-                                        }
+                                        {languages[this.state.language].welcome}
                                     </h1>
                                     <LoginButtons
                                         language={this.state.language}
@@ -62,21 +87,21 @@ class App extends Component {
                             className="language-button"
                             onClick={() => this.changeLanguage('english')}
                         >
-                            {languages[this.state.language].languages.english}
+                            {languages[this.state.language].english}
                         </button>
                         <span> | </span>
                         <button
                             className="language-button"
                             onClick={() => this.changeLanguage('german')}
                         >
-                            {languages[this.state.language].languages.german}
+                            {languages[this.state.language].german}
                         </button>
                         <span> | </span>
                         <button
                             className="language-button"
                             onClick={() => this.changeLanguage('romanian')}
                         >
-                            {languages[this.state.language].languages.romanian}
+                            {languages[this.state.language].romanian}
                         </button>
                     </span>
                 </div>

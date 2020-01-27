@@ -12,7 +12,7 @@ if (Meteor.isServer) {
 
 Meteor.methods({
     'requests.insert'(request, user) {
-        console.log(request, user);
+        console.log('eyy3', request, user);
 
         Requests.insert({
             userId: user._id,
@@ -20,5 +20,11 @@ Meteor.methods({
             supervisorId: user.supervisorId,
             requestData: request,
         });
+    },
+    'requests.accept'(requestId) {
+        Requests.update(requestId, { $set: { status: 'accepted' } });
+    },
+    'requests.refuse'(requestId) {
+        Requests.update(requestId, { $set: { status: 'refused' } });
     },
 });

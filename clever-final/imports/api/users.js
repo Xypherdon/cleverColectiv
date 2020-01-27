@@ -15,13 +15,9 @@ Meteor.methods({
         check(emailAddress, String);
         check(password, String);
 
-        console.log(emailAddress);
-
         const user = Users.findOne({
             emailAddress: emailAddress,
         });
-
-        console.log('User:', user);
 
         if (!user) {
             return 'error';
@@ -42,12 +38,21 @@ Meteor.methods({
             return 'wrong_password';
         }
 
-        Users.update({ _id: user._id }, { $set: { online: true } });
+        Users.update(
+            { _id: user._id },
+            { $set: { online: true, attemptsFailed: 0 } }
+        );
 
-        return user._id;
+        return user;
     },
     'users.findOne'(_id) {
         user = Users.findOne(_id);
         return user;
+    },
+    'users.update'(_id, updateData) {
+        Users.update(_id, { $set: updateData });
+    },
+    'users.insert'(user) {
+        Users.insert(user);
     },
 });
