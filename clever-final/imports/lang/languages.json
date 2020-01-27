@@ -34,7 +34,12 @@
         "unlock": "Unlock",
         "resetPassword": "Reset password",
         "newPassword": "New Password",
-        "delete": "Delete"
+        "delete": "Delete",
+        "projectName": "Project name",
+        "customer": "Customer",
+        "industry": "Industry",
+        "createProject": "Create project",
+        "projects": "Projects"
     },
     "german": {
         "welcome": "Wilkommen zu Clever!",
@@ -67,12 +72,17 @@
         "old": "alt",
         "new": "new",
         "requestsEmpty": "Keine Anfragen verfugbar",
-        "createUser": "Benutzer Erstellen",
+        "createUser": "Benutzer erstellen",
         "supervisorId": "Das ID der Supervisor",
         "unlock": "Entsperren",
         "resetPassword": "Neues Passwort",
         "newPassword": "Neues Passwort",
-        "delete": "Loschen"
+        "delete": "Loschen",
+        "projectName": "Projekt Name",
+        "customer": "Kunde",
+        "industry": "Industrie",
+        "createProject": "Projekt erstellen",
+        "projects": "Projekte"
     },
     "romanian": {
         "welcome": "Bine ati venit la Clever!",
@@ -110,6 +120,11 @@
         "unlock": "Deblocheaza",
         "resetPassword": "Reseteaza parola",
         "newPassword": "Noua parola",
-        "delete": "Sterge"
+        "delete": "Sterge",
+        "projectName": "Numele proiectului",
+        "customer": "Client",
+        "industry": "Industrie",
+        "createProject": "Creeaza proiect",
+        "projects": "Proiecte"
     }
 }

@@ -29,7 +29,7 @@ class AdminPage extends Component {
             if (this.props.users) {
                 this.setState({
                     user: this.props.users.find(
-                        user => user._id._str === this.props.userId
+                        user => user._id === this.props.userId
                     ),
                 });
             }
@@ -81,13 +81,14 @@ class AdminPage extends Component {
         Meteor.call('users.insert', {
             emailAddress,
             password,
-            supervisorId: new Mongo.ObjectID(supervisorId),
+            supervisorId,
             firstName,
             lastName,
             role,
             consultingLevel,
             region,
             skills,
+            projects: [],
         });
 
         this.setState({ create: false });
@@ -102,7 +103,6 @@ class AdminPage extends Component {
     }
 
     render() {
-        console.log(this.state.user);
         if (
             this.props.currentUser &&
             this.props.currentUser.role === 'Administrator'

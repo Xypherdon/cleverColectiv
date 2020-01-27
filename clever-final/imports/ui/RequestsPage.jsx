@@ -16,7 +16,6 @@ class RequestsPage extends Component {
             userId: this.props.userId,
             user: { skills: [] },
             language: this.props.language,
-            requests: [],
         };
     }
 
@@ -25,16 +24,7 @@ class RequestsPage extends Component {
             if (this.props.users) {
                 this.setState({
                     user: this.props.users.find(
-                        user => user._id._str === this.props.userId
-                    ),
-                });
-            }
-            if (this.props.requests) {
-                this.setState({
-                    requests: this.props.requests.filter(
-                        request =>
-                            request.supervisorId !==
-                            new Mongo.ObjectID(this.state.userId)
+                        user => user._id === this.props.userId
                     ),
                 });
             }
@@ -47,9 +37,10 @@ class RequestsPage extends Component {
     }
 
     renderRequests() {
-        let filteredRequests = this.state.requests.filter(
+        console.log('This.props', this.props, 'this.state', this.state);
+        let filteredRequests = this.props.requests.filter(
             request =>
-                request.supervisorId._str === this.state.user._id._str &&
+                request.supervisorId === this.state.user._id &&
                 request.status === 'pending'
         );
 
@@ -63,7 +54,7 @@ class RequestsPage extends Component {
 
         return filteredRequests.map(request => {
             let requestAuthor = this.props.users.find(
-                user => user._id._str === request.userId._str
+                user => user._id === request.userId
             );
 
             return (

@@ -55,8 +55,8 @@ export default class User extends Component {
 
     render() {
         if (this.state.editUser) {
-            history.push(`/admin/${this.props.currentUser._id._str}`);
-            return <Redirect to={`/profile/${this.state.user._id._str}`} />;
+            history.push(`/admin/${this.props.currentUser._id}`);
+            return <Redirect to={`/profile/${this.state.user._id}`} />;
         }
         return (
             <li key={this.props.key}>
@@ -66,7 +66,7 @@ export default class User extends Component {
                     {languages[this.state.language].role}:{' '}
                     {this.state.user.role}{' '}
                 </span>
-                <span>id: {this.state.user._id._str}</span>
+                <span>id: {this.state.user._id}</span>
                 <div>
                     <button
                         className="form-input-submit"

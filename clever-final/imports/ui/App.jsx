@@ -12,6 +12,9 @@ import history from '../router/history.js';
 import languages from '../lang/languages.json';
 import RequestsPage from './RequestsPage.jsx';
 import AdminPage from './AdminPage.jsx';
+import ProjectsPage from './ProjectsPage.jsx';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Users } from '../api/users.js';
 
 function ProfileChild(props) {
     let { id } = useParams();
@@ -57,8 +60,24 @@ class App extends Component {
         this.setState({ language: language });
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps !== this.props) {
+            if (this.state.currentUser) {
+                this.setState({
+                    currentUser: this.props.users.find(
+                        user => user._id === this.state.currentUser._id
+                    ),
+                });
+            }
+        }
+    }
+
     setCurrentUser(currentUser) {
-        this.setState({ currentUser: currentUser });
+        this.setState({
+            currentUser: this.props.users.find(
+                user => user._id === currentUser._id
+            ),
+        });
     }
 
     render() {
@@ -94,6 +113,12 @@ class App extends Component {
                                     />
                                 }
                             />
+                            <Route path="/projects">
+                                <ProjectsPage
+                                    language={this.state.language}
+                                    currentUser={this.state.currentUser}
+                                />
+                            </Route>
                             <Route path="/">
                                 <div className="title-div">
                                     <h1>
@@ -139,4 +164,10 @@ class App extends Component {
     }
 }
 
-export default App;
+export default withTracker(() => {
+    Meteor.subscribe('users');
+
+    return {
+        users: Users.find().fetch(),
+    };
+})(App);

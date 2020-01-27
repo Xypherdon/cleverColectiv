@@ -28,7 +28,7 @@ class ProfilePage extends Component {
             if (this.props.users) {
                 this.setState({
                     user: this.props.users.find(
-                        user => user._id._str === this.props.userId
+                        user => user._id === this.props.userId
                     ),
                 });
             }
@@ -121,7 +121,11 @@ class ProfilePage extends Component {
     }
 
     redirectToRequestsPage() {
-        this.setState({ redirect: true });
+        this.setState({ redirect: 'requests' });
+    }
+
+    redirectToProjectsPage() {
+        this.setState({ redirect: 'projects' });
     }
 
     render() {
@@ -129,11 +133,15 @@ class ProfilePage extends Component {
             this.props.currentUser !== null &&
             (this.props.currentUser.role === 'Supervisor' ||
                 this.props.currentUser.role === 'Administrator' ||
-                this.state.userId === this.props.currentUser._id._str)
+                this.state.userId === this.props.currentUser._id)
         ) {
-            if (this.state.redirect === true) {
+            if (this.state.redirect === 'requests') {
                 history.push(`/profile/${this.state.userId}`);
                 return <Redirect to={`/requests/${this.state.userId}`} />;
+            }
+            if (this.state.redirect === 'projects') {
+                history.push(`/profile/${this.state.userId}`);
+                return <Redirect to="/projects" />;
             }
             let final = '';
             if (this.state.user) {
@@ -296,6 +304,14 @@ class ProfilePage extends Component {
                                 >
                                     {languages[this.state.language].edit}
                                 </button>
+                                <button
+                                    className="form-input-submit"
+                                    onClick={this.redirectToProjectsPage.bind(
+                                        this
+                                    )}
+                                >
+                                    {languages[this.state.language].projects}
+                                </button>
                                 {requestsPageButton}
                             </span>
                             <span className="user-timeline-span">TIMELINE</span>
@@ -306,7 +322,13 @@ class ProfilePage extends Component {
 
             return final;
         } else {
-            return <Redirect to="/" />;
+            if (this.props.currentUser) {
+                return (
+                    <Redirect to={`/profile/${this.props.currentUser._id}`} />
+                );
+            } else {
+                return <Redirect to="/" />;
+            }
         }
     }
 }

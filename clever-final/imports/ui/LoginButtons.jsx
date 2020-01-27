@@ -67,11 +67,11 @@ export default class LoginButtons extends Component {
         if (this.state.user) {
             if (this.state.user.role === 'Administrator') {
                 history.push('/');
-                return <Redirect to={`/admin/${this.state.user._id._str}`} />;
+                return <Redirect to={`/admin/${this.state.user._id}`} />;
             }
             if (this.state.user._id) {
                 history.push('/');
-                return <Redirect to={`/profile/${this.state.user._id._str}`} />;
+                return <Redirect to={`/profile/${this.state.user._id}`} />;
             }
         }
         return (
