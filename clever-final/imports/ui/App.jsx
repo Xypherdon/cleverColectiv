@@ -15,6 +15,7 @@ import AdminPage from './AdminPage.jsx';
 import ProjectsPage from './ProjectsPage.jsx';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Users } from '../api/users.js';
+import SkillsPage from './SkillsPage.jsx';
 
 function ProfileChild(props) {
     let { id } = useParams();
@@ -115,6 +116,12 @@ class App extends Component {
                             />
                             <Route path="/projects">
                                 <ProjectsPage
+                                    language={this.state.language}
+                                    currentUser={this.state.currentUser}
+                                />
+                            </Route>
+                            <Route path="/skills">
+                                <SkillsPage
                                     language={this.state.language}
                                     currentUser={this.state.currentUser}
                                 />

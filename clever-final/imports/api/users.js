@@ -58,7 +58,6 @@ Meteor.methods({
         Users.remove(_id);
     },
     'users.joinProject'(_id, projectId) {
-        console.log(_id, projectId);
         Users.update(_id, { $push: { projects: projectId } });
     },
 });

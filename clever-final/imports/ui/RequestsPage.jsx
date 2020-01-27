@@ -16,6 +16,7 @@ class RequestsPage extends Component {
             userId: this.props.userId,
             user: { skills: [] },
             language: this.props.language,
+            currentUser: this.props.currentUser,
         };
     }
 
@@ -37,7 +38,34 @@ class RequestsPage extends Component {
     }
 
     renderRequests() {
-        console.log('This.props', this.props, 'this.state', this.state);
+        if (this.props.currentUser.role === 'Administrator') {
+            let pendingRequests = this.props.requests.filter(
+                request => request.status === 'pending'
+            );
+            if (pendingRequests.length === 0) {
+                return (
+                    <h1 className="title-div">
+                        {languages[this.state.language].requestsEmpty} :)
+                    </h1>
+                );
+            }
+
+            return pendingRequests.map(request => {
+                let requestAuthor = this.props.users.find(
+                    user => user._id === request.userId
+                );
+
+                return (
+                    <Request
+                        key={request._id}
+                        request={request}
+                        requestAuthor={requestAuthor}
+                        language={this.state.language}
+                    />
+                );
+            });
+        }
+
         let filteredRequests = this.props.requests.filter(
             request =>
                 request.supervisorId === this.state.user._id &&

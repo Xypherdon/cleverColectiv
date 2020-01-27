@@ -58,15 +58,9 @@ export default class User extends Component {
             history.push(`/admin/${this.props.currentUser._id}`);
             return <Redirect to={`/profile/${this.state.user._id}`} />;
         }
-        return (
-            <li key={this.props.key}>
-                <span>
-                    {languages[this.state.language].name}:{' '}
-                    {this.state.user.firstName} {this.state.user.lastName},{' '}
-                    {languages[this.state.language].role}:{' '}
-                    {this.state.user.role}{' '}
-                </span>
-                <span>id: {this.state.user._id}</span>
+        let adminButtons = '';
+        if (this.state.user && this.state.user.role !== 'Administrator') {
+            adminButtons = (
                 <div>
                     <button
                         className="form-input-submit"
@@ -99,7 +93,21 @@ export default class User extends Component {
                         placeholder={languages[this.state.language].newPassword}
                     />
                 </div>
-            </li>
+            );
+        }
+        return (
+            <div>
+                <li key={this.props.key}>
+                    <span>
+                        {languages[this.state.language].name}:{' '}
+                        {this.state.user.firstName} {this.state.user.lastName},{' '}
+                        {languages[this.state.language].role}:{' '}
+                        {this.state.user.role}{' '}
+                    </span>
+                    <span>id: {this.state.user._id}</span>
+                </li>
+                {adminButtons}
+            </div>
         );
     }
 }

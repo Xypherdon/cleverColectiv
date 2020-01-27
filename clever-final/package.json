@@ -12,6 +12,7 @@
     "meteor-node-stubs": "^1.0.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-minimal-pie-chart": "^6.0.1",
     "react-router-dom": "^5.1.2"
   },
   "meteor": {

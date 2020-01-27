@@ -17,6 +17,7 @@ class AdminPage extends Component {
             create: false,
             user: { skills: [] },
             currentUser: this.props.currentUser,
+            redirect: false,
         };
     }
 
@@ -102,11 +103,29 @@ class AdminPage extends Component {
         this.setState({ create: !this.state.create });
     }
 
+    redirect(to) {
+        this.setState({ redirect: to });
+    }
+
     render() {
         if (
             this.props.currentUser &&
             this.props.currentUser.role === 'Administrator'
         ) {
+            if (this.state.redirect === 'requests') {
+                history.push(`/admin/${this.props.currentUser._id}`);
+                return (
+                    <Redirect to={`/requests/${this.props.currentUser._id}`} />
+                );
+            }
+            if (this.state.redirect === 'projects') {
+                history.push(`/admin/${this.props.currentUser._id}`);
+                return <Redirect to="/projects" />;
+            }
+            if (this.state.redirect === 'skills') {
+                history.push(`/admin/${this.props.currentUser._id}`);
+                return <Redirect to="/skills" />;
+            }
             let final = '';
             if (this.state.create) {
                 final = (
@@ -236,6 +255,22 @@ class AdminPage extends Component {
                             className="form-input-submit"
                         >
                             {languages[this.state.language].createUser}
+                        </button>
+                        <button
+                            className="form-input-submit"
+                            onClick={() => {
+                                this.redirect('requests');
+                            }}
+                        >
+                            {languages[this.state.language].requests}
+                        </button>
+                        <button
+                            className="form-input-submit"
+                            onClick={() => {
+                                this.redirect('skills');
+                            }}
+                        >
+                            {languages[this.state.language].skills}
                         </button>
 
                         <ul>{this.renderUsers()}</ul>

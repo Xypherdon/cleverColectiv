@@ -120,12 +120,8 @@ class ProfilePage extends Component {
         }
     }
 
-    redirectToRequestsPage() {
-        this.setState({ redirect: 'requests' });
-    }
-
-    redirectToProjectsPage() {
-        this.setState({ redirect: 'projects' });
+    redirect(to) {
+        this.setState({ redirect: to });
     }
 
     render() {
@@ -142,6 +138,10 @@ class ProfilePage extends Component {
             if (this.state.redirect === 'projects') {
                 history.push(`/profile/${this.state.userId}`);
                 return <Redirect to="/projects" />;
+            }
+            if (this.state.redirect === 'skills') {
+                history.push(`/profile/${this.state.userId}`);
+                return <Redirect to="/skills" />;
             }
             let final = '';
             if (this.state.user) {
@@ -246,15 +246,55 @@ class ProfilePage extends Component {
                         </span>
                     );
                 } else {
-                    let requestsPageButton = '';
-                    if (this.state.user.role === 'Supervisor') {
-                        requestsPageButton = (
-                            <button
-                                className="form-input-submit"
-                                onClick={this.redirectToRequestsPage.bind(this)}
-                            >
-                                {languages[this.state.language].requests}
-                            </button>
+                    let supervisorButtons = '';
+                    if (
+                        this.state.user.role === 'Supervisor' &&
+                        this.props.currentUser._id === this.state.userId
+                    ) {
+                        supervisorButtons = (
+                            <div>
+                                <button
+                                    className="form-input-submit"
+                                    onClick={() => {
+                                        this.redirect('requests');
+                                    }}
+                                >
+                                    {languages[this.state.language].requests}
+                                </button>
+                                <button
+                                    className="form-input-submit"
+                                    onClick={() => {
+                                        this.redirect('skills');
+                                    }}
+                                >
+                                    {languages[this.state.language].skills}
+                                </button>
+                            </div>
+                        );
+                    }
+
+                    let personalButtons = '';
+                    if (
+                        this.props.currentUser._id == this.state.userId ||
+                        this.props.currentUser.role === 'Administrator'
+                    ) {
+                        personalButtons = (
+                            <div>
+                                <button
+                                    className="form-input-submit"
+                                    onClick={this.editProfile.bind(this)}
+                                >
+                                    {languages[this.state.language].edit}
+                                </button>
+                                <button
+                                    className="form-input-submit"
+                                    onClick={() => {
+                                        this.redirect('projects');
+                                    }}
+                                >
+                                    {languages[this.state.language].projects}
+                                </button>
+                            </div>
                         );
                     }
                     final = (
@@ -298,21 +338,8 @@ class ProfilePage extends Component {
                                         )
                                     )}
                                 </h2>
-                                <button
-                                    className="form-input-submit"
-                                    onClick={this.editProfile.bind(this)}
-                                >
-                                    {languages[this.state.language].edit}
-                                </button>
-                                <button
-                                    className="form-input-submit"
-                                    onClick={this.redirectToProjectsPage.bind(
-                                        this
-                                    )}
-                                >
-                                    {languages[this.state.language].projects}
-                                </button>
-                                {requestsPageButton}
+                                {personalButtons}
+                                {supervisorButtons}
                             </span>
                             <span className="user-timeline-span">TIMELINE</span>
                         </div>
