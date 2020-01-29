@@ -9,9 +9,11 @@ import ReactDOM from 'react-dom';
 import { Redirect } from 'react-router-dom';
 import history from '../router/history.js';
 import { Picture } from 'react-responsive-picture';
+import Pdf from 'react-to-pdf';
 import { Projects } from '../api/projects.js';
 import TimelineProject from './TimelineProject.jsx';
-const image2base64 = require('image-to-base64');
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 class ProfilePage extends Component {
     constructor(props) {
@@ -179,6 +181,18 @@ class ProfilePage extends Component {
 
     redirect(to) {
         this.setState({ redirect: to });
+    }
+
+    downloadAsPDF() {
+        const userDetails = ReactDOM.findDOMNode(this.refs.userDetailsSpan);
+
+        html2canvas(userDetails).then(canvas1 => {
+            const imgData1 = canvas1.toDataURL('image/png');
+
+            let pdf = new jsPDF();
+            pdf.addImage(imgData1, 'PNG', 0, 0);
+            pdf.save(`${this.props.userId}.pdf`);
+        });
     }
 
     render() {
@@ -392,62 +406,81 @@ class ProfilePage extends Component {
                     }
                     final = (
                         <div>
-                            <span className="user-details-span">
-                                <img
-                                    width="200"
-                                    height="200"
-                                    className="profile-picture"
-                                    ref="profilePicture"
-                                    src={
-                                        this.state.profilePicture
-                                            ? this.state.profilePicture.data
-                                            : null
-                                    }
-                                />
-                                <h4 className="profile-identifier">
-                                    {languages[this.state.language].name}
-                                </h4>
-                                <h2 className="profile-value">
-                                    {this.state.user.firstName}{' '}
-                                    {this.state.user.lastName}
-                                </h2>
-                                <h4 className="profile-identifier">
-                                    {languages[this.state.language].role}
-                                </h4>
-                                <h2 className="profile-value">
-                                    {this.state.user.role}
-                                </h2>
-                                <h4 className="profile-identifier">
-                                    {
-                                        languages[this.state.language]
-                                            .consultingLevel
-                                    }
-                                </h4>
-                                <h2 className="profile-value">
-                                    {this.state.user.consultingLevel}
-                                </h2>
-                                <h4 className="profile-identifier">
-                                    {languages[this.state.language].region}
-                                </h4>
-                                <h2 className="profile-value">
-                                    {this.state.user.region}
-                                </h2>
-                                <h4 className="profile-identifier">
-                                    {languages[this.state.language].skills}
-                                </h4>
-                                <h2 className="profile-value">
-                                    {this.state.user.skills.map(
-                                        (skill, key) => (
-                                            <div key={key}>{skill}</div>
-                                        )
-                                    )}
-                                </h2>
-                                {personalButtons}
-                                {supervisorButtons}
-                            </span>
-                            <span className="user-timeline-span">
-                                <div>{this.renderProjects()}</div>
-                            </span>
+                            <div ref="profileDiv">
+                                <span
+                                    ref="userDetailsSpan"
+                                    className="user-details-span"
+                                >
+                                    <img
+                                        width="200"
+                                        height="200"
+                                        className="profile-picture"
+                                        ref="profilePicture"
+                                        src={
+                                            this.state.profilePicture
+                                                ? this.state.profilePicture.data
+                                                : '/images/profilePicturePlaceholder.jpg'
+                                        }
+                                    />
+                                    <h4 className="profile-identifier">
+                                        {languages[this.state.language].name}
+                                    </h4>
+                                    <h2 className="profile-value">
+                                        {this.state.user.firstName}{' '}
+                                        {this.state.user.lastName}
+                                    </h2>
+                                    <h4 className="profile-identifier">
+                                        {languages[this.state.language].role}
+                                    </h4>
+                                    <h2 className="profile-value">
+                                        {this.state.user.role}
+                                    </h2>
+                                    <h4 className="profile-identifier">
+                                        {
+                                            languages[this.state.language]
+                                                .consultingLevel
+                                        }
+                                    </h4>
+                                    <h2 className="profile-value">
+                                        {this.state.user.consultingLevel}
+                                    </h2>
+                                    <h4 className="profile-identifier">
+                                        {languages[this.state.language].region}
+                                    </h4>
+                                    <h2 className="profile-value">
+                                        {this.state.user.region}
+                                    </h2>
+                                    <h4 className="profile-identifier">
+                                        {languages[this.state.language].skills}
+                                    </h4>
+                                    <h2 className="profile-value">
+                                        {this.state.user.skills.map(
+                                            (skill, key) => (
+                                                <div key={key}>{skill}</div>
+                                            )
+                                        )}
+                                    </h2>
+                                    <h4 className="profile-identifier">
+                                        {
+                                            languages[this.state.language]
+                                                .projectExperience
+                                        }
+                                        :
+                                    </h4>
+                                    <div>{this.renderProjects()}</div>
+                                    {personalButtons}
+                                    {supervisorButtons}
+                                    <button
+                                        className="form-input-submit"
+                                        onClick={this.downloadAsPDF.bind(this)}
+                                    >
+                                        {
+                                            languages[this.state.language]
+                                                .downloadAsPDF
+                                        }
+                                    </button>
+                                </span>
+                            </div>
                         </div>
                     );
                 }

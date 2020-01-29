@@ -43,7 +43,9 @@
         "searchSkill": "Search by skill",
         "logout": "Logout",
         "uploadPicture": "Upload picture",
-        "deletePicture": "Delete picture"
+        "deletePicture": "Delete picture",
+        "projectExperience": "Project Experience",
+        "downloadAsPDF": "Download PDF"
     },
     "german": {
         "welcome": "Wilkommen zu Clever!",
@@ -90,7 +92,9 @@
         "searchSkill": "Suche nach Kompetenz",
         "logout": "Ausloggen",
         "uploadPicture": "Bild hochladen",
-        "deletePicture": "Bild loschen"
+        "deletePicture": "Bild loschen",
+        "projectExperience": "Projekt Erfahrung",
+        "downloadAsPDF": "PDF herunterladen"
     },
     "romanian": {
         "welcome": "Bine ati venit la Clever!",
@@ -137,6 +141,8 @@
         "searchSkill": "Cauta dupa aptitudine",
         "logout": "Delogheaza-te",
         "uploadPicture": "Incarca poza",
-        "deletePicture": "Sterge poza"
+        "deletePicture": "Sterge poza",
+        "projectExperience": "Experienta pe proiecte",
+        "downloadAsPDF": "Descarca PDF"
     }
 }

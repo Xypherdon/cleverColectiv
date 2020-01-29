@@ -44,25 +44,20 @@ body {
 }
 
 .user-details-span {
+    background-color: #282c34;
     border-style: solid;
     border-color: white;
     border-radius: 20px;
     border-width: 4px;
     padding: 40px;
-    width: 40%;
-    float: left;
+    width: 80%;
     text-align: left;
-}
-
-.user-timeline-span {
-    float: right;
-    /* border-style: solid;
-    border-color: white;
-    border-radius: 20px;
-    border-width: 4px; */
-    padding: 40px;
-    width: 40%;
-    text-align: left;
+    max-width: 500px;
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%);
 }
 
 .language-div {
@@ -130,6 +125,9 @@ body {
     height: 25px;
     text-align: center;
     margin-bottom: 5px;
+}
+
+.profile-div {
 }
 
 .skill-page-left {
