@@ -75,78 +75,93 @@ class ProjectsPage extends Component {
 
     render() {
         let final = '';
-        console.log(this.props);
-        if (this.state.create) {
-            final = (
-                <span className="edit-user-details-span">
-                    <form
-                        className="request-form"
-                        onSubmit={this.handleSubmit.bind(this)}
-                    >
-                        <div>
-                            <input
-                                ref="projectNameInput"
-                                className="form-input"
-                                type="text"
-                                placeholder={
-                                    languages[this.state.language].projectName
-                                }
-                            />
-                        </div>
-                        <div>
-                            <input
-                                ref="customerInput"
-                                className="form-input"
-                                type="text"
-                                placeholder={
-                                    languages[this.state.language].customer
-                                }
-                            />
-                        </div>
-                        <div>
-                            <input
-                                ref="industryInput"
-                                className="form-input"
-                                type="text"
-                                placeholder={
-                                    languages[this.state.language].industry
-                                }
-                            />
-                        </div>
+        if (
+            this.props.currentUser &&
+            (this.props.currentUser.role === 'Supervisor' ||
+                this.props.currentUser.role === 'Administrator')
+        ) {
+            if (this.state.create) {
+                final = (
+                    <span className="edit-user-details-span">
+                        <form
+                            className="request-form"
+                            onSubmit={this.handleSubmit.bind(this)}
+                        >
+                            <div>
+                                <input
+                                    ref="projectNameInput"
+                                    className="form-input"
+                                    type="text"
+                                    placeholder={
+                                        languages[this.state.language]
+                                            .projectName
+                                    }
+                                />
+                            </div>
+                            <div>
+                                <input
+                                    ref="customerInput"
+                                    className="form-input"
+                                    type="text"
+                                    placeholder={
+                                        languages[this.state.language].customer
+                                    }
+                                />
+                            </div>
+                            <div>
+                                <input
+                                    ref="industryInput"
+                                    className="form-input"
+                                    type="text"
+                                    placeholder={
+                                        languages[this.state.language].industry
+                                    }
+                                />
+                            </div>
 
-                        <div>
-                            <input
-                                className="form-input-submit"
-                                type="submit"
-                                defaultValue={
-                                    languages[this.state.language].sendRequest
-                                }
-                            />
-                            <button
-                                className="form-input-submit"
-                                onClick={this.cancel.bind(this)}
-                            >
-                                {languages[this.state.language].cancel}
-                            </button>
-                        </div>
-                    </form>
-                </span>
-            );
+                            <div>
+                                <input
+                                    className="form-input-submit"
+                                    type="submit"
+                                    defaultValue={
+                                        languages[this.state.language]
+                                            .sendRequest
+                                    }
+                                />
+                                <button
+                                    className="form-input-submit"
+                                    onClick={this.cancel.bind(this)}
+                                >
+                                    {languages[this.state.language].cancel}
+                                </button>
+                            </div>
+                        </form>
+                    </span>
+                );
+            } else {
+                final = (
+                    <div>
+                        <button
+                            onClick={this.createProjectToggle.bind(this)}
+                            className="form-input-submit"
+                        >
+                            {languages[this.state.language].createProject}
+                        </button>
+
+                        <ul>{this.renderProjects()}</ul>
+                    </div>
+                );
+            }
+            return final;
         } else {
-            final = (
-                <div>
-                    <button
-                        onClick={this.createProjectToggle.bind(this)}
-                        className="form-input-submit"
-                    >
-                        {languages[this.state.language].createProject}
-                    </button>
-
-                    <ul>{this.renderProjects()}</ul>
-                </div>
-            );
+            if (this.props.currentUser) {
+                return (
+                    <Redirect to={`/profile/${this.props.currentUser._id}`} />
+                );
+            } else {
+                return <Redirect to="/" />;
+            }
         }
-        return final;
     }
 }
 

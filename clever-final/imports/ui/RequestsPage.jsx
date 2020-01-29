@@ -45,7 +45,7 @@ class RequestsPage extends Component {
             if (pendingRequests.length === 0) {
                 return (
                     <h1 className="title-div">
-                        {languages[this.state.language].requestsEmpty} :)
+                        {languages[this.state.language].requestsEmpty} {':)'}
                     </h1>
                 );
             }
@@ -75,7 +75,7 @@ class RequestsPage extends Component {
         if (filteredRequests.length === 0) {
             return (
                 <h1 className="title-div">
-                    {languages[this.state.language].requestsEmpty} :)
+                    {languages[this.state.language].requestsEmpty} {':)'}
                 </h1>
             );
         }
@@ -97,11 +97,22 @@ class RequestsPage extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <ul>{this.renderRequests()}</ul>
-            </div>
-        );
+        if (
+            this.props.currentUser &&
+            this.props.currentUser._id === this.props.userId &&
+            (this.props.currentUser.role === 'Administrator' ||
+                this.props.currentUser.role === 'Supervisor')
+        ) {
+            return (
+                <div>
+                    <ul>{this.renderRequests()}</ul>
+                </div>
+            );
+        } else if (this.props.currentUser) {
+            return <Redirect to={`/profile/${this.props.currentUser._id}`} />;
+        } else {
+            return <Redirect to="/" />;
+        }
     }
 }
 

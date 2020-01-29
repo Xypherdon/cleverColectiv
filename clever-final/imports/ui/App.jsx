@@ -55,33 +55,75 @@ export var currentUserId = '';
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { language: 'english', currentUser: null };
+        this.state = {
+            language: 'english',
+            currentUser: null,
+            loggedIn: false,
+        };
     }
     changeLanguage(language) {
         this.setState({ language: language });
     }
 
+    componentDidMount() {
+        this.setState({
+            currentUser: JSON.parse(window.localStorage.getItem('currentUser')),
+        });
+    }
+
     componentDidUpdate(prevProps) {
         if (prevProps !== this.props) {
             if (this.state.currentUser) {
+                let updatedCurrentUser = this.props.users.find(
+                    user => user._id === this.state.currentUser._id
+                );
+
+                window.localStorage.setItem(
+                    'currentUser',
+                    JSON.stringify(updatedCurrentUser)
+                );
                 this.setState({
-                    currentUser: this.props.users.find(
-                        user => user._id === this.state.currentUser._id
-                    ),
+                    currentUser: updatedCurrentUser,
                 });
             }
         }
     }
 
+    logout() {
+        window.localStorage.clear();
+        this.setState({ loggedIn: false });
+        location.reload();
+    }
+
     setCurrentUser(currentUser) {
+        let lightCurrentUser = currentUser;
+        delete lightCurrentUser.profilePicture;
+        window.localStorage.setItem(
+            'currentUser',
+            JSON.stringify(lightCurrentUser)
+        );
         this.setState({
             currentUser: this.props.users.find(
                 user => user._id === currentUser._id
             ),
+            loggedIn: true,
         });
     }
 
     render() {
+        let logoutButton = '';
+
+        if (this.state.currentUser) {
+            logoutButton = (
+                <button
+                    className="logout-button"
+                    onClick={this.logout.bind(this)}
+                >
+                    {languages[this.state.language].logout}
+                </button>
+            );
+        }
+
         return (
             <div>
                 <div>
@@ -133,6 +175,7 @@ class App extends Component {
                                     </h1>
                                     <LoginButtons
                                         language={this.state.language}
+                                        currentUser={this.state.currentUser}
                                         setCurrentUser={this.setCurrentUser.bind(
                                             this
                                         )}
@@ -142,6 +185,7 @@ class App extends Component {
                         </Switch>
                     </Router>
                 </div>
+                <div className="logout-button-div">{logoutButton}</div>
                 <div className="language-div">
                     <span className="language-button">
                         <button

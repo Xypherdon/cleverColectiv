@@ -1,12 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, useCallback } from 'react';
 
 import { Meteor } from 'meteor/meteor';
 import { Users } from '../api/users.js';
+import { Pictures } from '../api/pictures.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import languages from '../lang/languages.json';
 import ReactDOM from 'react-dom';
 import { Redirect } from 'react-router-dom';
 import history from '../router/history.js';
+import { Picture } from 'react-responsive-picture';
+import { Projects } from '../api/projects.js';
+import TimelineProject from './TimelineProject.jsx';
+const image2base64 = require('image-to-base64');
+
 class ProfilePage extends Component {
     constructor(props) {
         super(props);
@@ -17,6 +23,7 @@ class ProfilePage extends Component {
             edit: false,
             redirect: false,
             userId: this.props.userId,
+            profilePicture: '/images/profilePicture.jpg',
         };
     }
     componentDidMount() {
@@ -29,6 +36,9 @@ class ProfilePage extends Component {
                 this.setState({
                     user: this.props.users.find(
                         user => user._id === this.props.userId
+                    ),
+                    profilePicture: this.props.pictures.find(
+                        picture => picture.userId === this.props.userId
                     ),
                 });
             }
@@ -59,6 +69,31 @@ class ProfilePage extends Component {
     }
     cancel() {
         this.setState({ edit: false });
+    }
+    deletePicture() {
+        if (this.state.profilePicture) {
+            Meteor.call('pictures.remove', this.props.userId);
+        }
+    }
+
+    renderProjects() {
+        if (this.props.currentUser.projects) {
+            return this.props.currentUser.projects.map(projectId => {
+                return this.props.projects.map(project => {
+                    if (project._id === projectId) {
+                        return (
+                            <div key={projectId}>
+                                <TimelineProject
+                                    language={this.state.language}
+                                    project={project}
+                                    currentUser={this.props.currentUser}
+                                />
+                            </div>
+                        );
+                    }
+                });
+            });
+        }
     }
 
     handleSubmit() {
@@ -110,13 +145,35 @@ class ProfilePage extends Component {
             request.skills = skills;
         }
 
-        if (
-            this.props.currentUser.role === 'Supervisor' ||
-            this.props.currentUser.role === 'Administrator'
-        ) {
-            Meteor.call('users.update', this.state.user._id, request);
+        const files = ReactDOM.findDOMNode(this.refs.profilePictureInput).files;
+
+        if (files.length !== 0) {
+            const file = files[0];
+            const role = this.props.currentUser.role;
+            const user = this.state.user;
+            const fileReader = new FileReader();
+            fileReader.onload = function(event) {
+                const dataUrl = event.target.result;
+                const profilePicture = { userId: user._id, data: dataUrl };
+
+                if (role === 'Supervisor' || role === 'Administrator') {
+                    Meteor.call('users.update', user._id, request);
+                    Meteor.call('pictures.upsert', profilePicture);
+                } else {
+                    request.profilePicture = profilePicture;
+                    Meteor.call('requests.insert', request, user);
+                }
+            };
+            fileReader.readAsDataURL(file);
         } else {
-            Meteor.call('requests.insert', request, this.state.user);
+            if (
+                this.props.currentUser.role === 'Supervisor' ||
+                this.props.currentUser.role === 'Administrator'
+            ) {
+                Meteor.call('users.update', this.state.user._id, request);
+            } else {
+                Meteor.call('requests.insert', request, this.state.user);
+            }
         }
     }
 
@@ -126,7 +183,7 @@ class ProfilePage extends Component {
 
     render() {
         if (
-            this.props.currentUser !== null &&
+            this.props.currentUser &&
             (this.props.currentUser.role === 'Supervisor' ||
                 this.props.currentUser.role === 'Administrator' ||
                 this.state.userId === this.props.currentUser._id)
@@ -225,6 +282,42 @@ class ProfilePage extends Component {
                                         defaultValue={this.state.user.skills}
                                     />
                                 </div>
+                                <div>
+                                    <input
+                                        type="file"
+                                        id="file"
+                                        className="file-input"
+                                        ref="profilePictureInput"
+                                    />
+
+                                    <span>
+                                        <label htmlFor="file">
+                                            {
+                                                languages[this.state.language]
+                                                    .uploadPicture
+                                            }
+                                        </label>
+                                        {' | '}
+                                        <button
+                                            id="deleteFile"
+                                            className="file-input"
+                                            onClick={this.deletePicture.bind(
+                                                this
+                                            )}
+                                        >
+                                            {
+                                                languages[this.state.language]
+                                                    .deletePicture
+                                            }
+                                        </button>
+                                        <label htmlFor="deleteFile">
+                                            {
+                                                languages[this.state.language]
+                                                    .deletePicture
+                                            }
+                                        </label>
+                                    </span>
+                                </div>
 
                                 <div>
                                     <input
@@ -300,6 +393,17 @@ class ProfilePage extends Component {
                     final = (
                         <div>
                             <span className="user-details-span">
+                                <img
+                                    width="200"
+                                    height="200"
+                                    className="profile-picture"
+                                    ref="profilePicture"
+                                    src={
+                                        this.state.profilePicture
+                                            ? this.state.profilePicture.data
+                                            : null
+                                    }
+                                />
                                 <h4 className="profile-identifier">
                                     {languages[this.state.language].name}
                                 </h4>
@@ -341,7 +445,9 @@ class ProfilePage extends Component {
                                 {personalButtons}
                                 {supervisorButtons}
                             </span>
-                            <span className="user-timeline-span">TIMELINE</span>
+                            <span className="user-timeline-span">
+                                <div>{this.renderProjects()}</div>
+                            </span>
                         </div>
                     );
                 }
@@ -362,8 +468,12 @@ class ProfilePage extends Component {
 
 export default withTracker(() => {
     Meteor.subscribe('users');
+    Meteor.subscribe('pictures');
+    Meteor.subscribe('projects');
 
     return {
         users: Users.find().fetch(),
+        pictures: Pictures.find().fetch(),
+        projects: Projects.find().fetch(),
     };
 })(ProfilePage);

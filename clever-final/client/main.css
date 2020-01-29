@@ -49,14 +49,20 @@ body {
     border-radius: 20px;
     border-width: 4px;
     padding: 40px;
-    width: 50%;
+    width: 40%;
     float: left;
     text-align: left;
 }
 
 .user-timeline-span {
     float: right;
-    background-color: blueviolet;
+    /* border-style: solid;
+    border-color: white;
+    border-radius: 20px;
+    border-width: 4px; */
+    padding: 40px;
+    width: 40%;
+    text-align: left;
 }
 
 .language-div {
@@ -141,4 +147,41 @@ body {
 
 .pie-chart {
     float: right;
+}
+
+.logout-button-div {
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    margin: 20px;
+}
+
+.logout-button {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.profile-picture {
+    float: right;
+}
+
+.file-input {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute !important;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.file-input-label {
 }

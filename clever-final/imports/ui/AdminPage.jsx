@@ -279,7 +279,13 @@ class AdminPage extends Component {
             }
             return final;
         } else {
-            return <h1>NOT AUTHORIZED</h1>;
+            if (this.props.currentUser) {
+                return (
+                    <Redirect to={`/profile/${this.props.currentUser._id}`} />
+                );
+            } else {
+                return <Redirect to="/" />;
+            }
         }
     }
 }

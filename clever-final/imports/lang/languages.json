@@ -40,7 +40,10 @@
         "industry": "Industry",
         "createProject": "Create project",
         "projects": "Projects",
-        "searchSkill": "Search by skill"
+        "searchSkill": "Search by skill",
+        "logout": "Logout",
+        "uploadPicture": "Upload picture",
+        "deletePicture": "Delete picture"
     },
     "german": {
         "welcome": "Wilkommen zu Clever!",
@@ -84,7 +87,10 @@
         "industry": "Industrie",
         "createProject": "Projekt erstellen",
         "projects": "Projekte",
-        "searchSkill": "Suche nach Kompetenz"
+        "searchSkill": "Suche nach Kompetenz",
+        "logout": "Ausloggen",
+        "uploadPicture": "Bild hochladen",
+        "deletePicture": "Bild loschen"
     },
     "romanian": {
         "welcome": "Bine ati venit la Clever!",
@@ -128,6 +134,9 @@
         "industry": "Industrie",
         "createProject": "Creeaza proiect",
         "projects": "Proiecte",
-        "searchSkill": "Cauta dupa aptitudine"
+        "searchSkill": "Cauta dupa aptitudine",
+        "logout": "Delogheaza-te",
+        "uploadPicture": "Incarca poza",
+        "deletePicture": "Sterge poza"
     }
 }

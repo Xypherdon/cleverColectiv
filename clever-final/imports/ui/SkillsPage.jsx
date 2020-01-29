@@ -125,8 +125,6 @@ class SkillsPage extends Component {
     }
 
     render() {
-        console.log(this.state);
-
         let pieChartData = this.renderPieChart();
         let pieChartText = this.renderPieChartText(pieChartData);
         return (

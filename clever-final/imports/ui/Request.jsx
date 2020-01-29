@@ -30,11 +30,22 @@ export default class Request extends Component {
 
     handleAccept() {
         Meteor.call('requests.accept', this.state.request._id);
-        Meteor.call(
-            'users.update',
-            this.state.requestAuthor._id,
-            this.state.request.requestData
-        );
+        let finalRequestData = this.state.request.requestData;
+        const profilePicture = finalRequestData.profilePicture;
+        delete finalRequestData.profilePicture;
+        if (
+            !(
+                Object.entries(finalRequestData).length === 0 &&
+                finalRequestData.constructor === Object
+            )
+        ) {
+            Meteor.call(
+                'users.update',
+                this.state.requestAuthor._id,
+                finalRequestData
+            );
+        }
+        Meteor.call('pictures.upsert', profilePicture);
     }
 
     handleRefuse() {

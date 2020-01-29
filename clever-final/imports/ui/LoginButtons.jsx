@@ -11,6 +11,7 @@ export default class LoginButtons extends Component {
         this.state = {
             errorMessage: '',
             currentUserId: '',
+            currentUser: this.props.currentUser,
             language: this.props.language,
             setCurrentUser: this.props.setCurrentUser,
         };
@@ -64,14 +65,16 @@ export default class LoginButtons extends Component {
         });
     }
     render() {
-        if (this.state.user) {
-            if (this.state.user.role === 'Administrator') {
+        if (this.props.currentUser) {
+            if (this.props.currentUser.role === 'Administrator') {
                 history.push('/');
-                return <Redirect to={`/admin/${this.state.user._id}`} />;
+                return <Redirect to={`/admin/${this.props.currentUser._id}`} />;
             }
-            if (this.state.user._id) {
+            if (this.props.currentUser._id) {
                 history.push('/');
-                return <Redirect to={`/profile/${this.state.user._id}`} />;
+                return (
+                    <Redirect to={`/profile/${this.props.currentUser._id}`} />
+                );
             }
         }
         return (
