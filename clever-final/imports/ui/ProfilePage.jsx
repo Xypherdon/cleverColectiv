@@ -14,6 +14,7 @@ import { Projects } from '../api/projects.js';
 import TimelineProject from './TimelineProject.jsx';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { useTable } from 'react-table';
 
 class ProfilePage extends Component {
     constructor(props) {
@@ -84,13 +85,15 @@ class ProfilePage extends Component {
                 return this.props.projects.map(project => {
                     if (project._id === projectId) {
                         return (
-                            <div key={projectId}>
-                                <TimelineProject
-                                    language={this.state.language}
-                                    project={project}
-                                    currentUser={this.props.currentUser}
-                                />
-                            </div>
+                            <React.Fragment key={projectId}>
+                                <tr>
+                                    <TimelineProject
+                                        language={this.state.language}
+                                        project={project}
+                                        currentUser={this.props.currentUser}
+                                    />
+                                </tr>
+                            </React.Fragment>
                         );
                     }
                 });
@@ -162,7 +165,7 @@ class ProfilePage extends Component {
                     Meteor.call('users.update', user._id, request);
                     Meteor.call('pictures.upsert', profilePicture);
                 } else {
-                    request.profilePicture = profilePicture;
+                    request.profilePicture = true;
                     Meteor.call('requests.insert', request, user);
                 }
             };
@@ -467,7 +470,20 @@ class ProfilePage extends Component {
                                         }
                                         :
                                     </h4>
-                                    <div>{this.renderProjects()}</div>
+                                    <div>
+                                        <table>
+                                            <thead>
+                                                <tr className="table-head">
+                                                    <th>Project Name</th>
+                                                    <th>Customer</th>
+                                                    <th>Industry</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {this.renderProjects()}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     {personalButtons}
                                     {supervisorButtons}
                                     <button

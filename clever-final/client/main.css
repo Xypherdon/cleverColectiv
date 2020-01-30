@@ -181,6 +181,6 @@ body {
     white-space: nowrap;
     width: 1px;
 }
-
-.file-input-label {
+table {
+    width: 100%;
 }

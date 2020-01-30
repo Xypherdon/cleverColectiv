@@ -45,7 +45,8 @@
         "uploadPicture": "Upload picture",
         "deletePicture": "Delete picture",
         "projectExperience": "Project Experience",
-        "downloadAsPDF": "Download PDF"
+        "downloadAsPDF": "Download PDF",
+        "profilePictureChanged": "Profile picture changed"
     },
     "german": {
         "welcome": "Wilkommen zu Clever!",
@@ -94,7 +95,8 @@
         "uploadPicture": "Bild hochladen",
         "deletePicture": "Bild loschen",
         "projectExperience": "Projekt Erfahrung",
-        "downloadAsPDF": "PDF herunterladen"
+        "downloadAsPDF": "PDF herunterladen",
+        "profilePictureChanged": "Bild geandert"
     },
     "romanian": {
         "welcome": "Bine ati venit la Clever!",
@@ -143,6 +145,7 @@
         "uploadPicture": "Incarca poza",
         "deletePicture": "Sterge poza",
         "projectExperience": "Experienta pe proiecte",
-        "downloadAsPDF": "Descarca PDF"
+        "downloadAsPDF": "Descarca PDF",
+        "profilePictureChanged": "Poza de profil schimbata"
     }
 }

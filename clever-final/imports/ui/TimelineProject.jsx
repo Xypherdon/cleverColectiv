@@ -32,16 +32,11 @@ export default class TimelineProject extends Component {
 
     render() {
         return (
-            <li key={this.state.project._id}>
-                <span>
-                    {languages[this.state.language].projectName}:{' '}
-                    {this.state.project.projectName},{' '}
-                    {languages[this.state.language].customer}:{' '}
-                    {this.state.project.customer},{' '}
-                    {languages[this.state.language].industry}:{' '}
-                    {this.state.project.industry}{' '}
-                </span>
-            </li>
+            <React.Fragment>
+                <td>{this.state.project.projectName}</td>
+                <td>{this.state.project.customer}</td>
+                <td>{this.state.project.industry}</td>
+            </React.Fragment>
         );
     }
 }

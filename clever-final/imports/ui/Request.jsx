@@ -61,6 +61,19 @@ export default class Request extends Component {
     renderPreview() {
         return Object.entries(this.state.request.requestData).map(
             ([key, value], uniqueKey) => {
+                if (key === 'profilePicture') {
+                    {
+                        return (
+                            <div key={uniqueKey}>
+                                {
+                                    languages[this.state.language]
+                                        .profilePictureChanged
+                                }
+                            </div>
+                        );
+                    }
+                } else {
+                }
                 return (
                     <div key={uniqueKey}>
                         {languages[this.state.language][key]}:{' '}
