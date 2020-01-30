@@ -474,9 +474,30 @@ class ProfilePage extends Component {
                                         <table>
                                             <thead>
                                                 <tr className="table-head">
-                                                    <th>Project Name</th>
-                                                    <th>Customer</th>
-                                                    <th>Industry</th>
+                                                    <th>
+                                                        {
+                                                            languages[
+                                                                this.state
+                                                                    .language
+                                                            ].projectName
+                                                        }
+                                                    </th>
+                                                    <th>
+                                                        {
+                                                            languages[
+                                                                this.state
+                                                                    .language
+                                                            ].customer
+                                                        }
+                                                    </th>
+                                                    <th>
+                                                        {
+                                                            languages[
+                                                                this.state
+                                                                    .language
+                                                            ].industry
+                                                        }
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
