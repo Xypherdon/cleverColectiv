@@ -272,6 +272,14 @@ class AdminPage extends Component {
                         >
                             {languages[this.state.language].skills}
                         </button>
+                        <button
+                            className="form-input-submit"
+                            onClick={() => {
+                                this.redirect('projects');
+                            }}
+                        >
+                            {languages[this.state.language].projects}
+                        </button>
 
                         <ul>{this.renderUsers()}</ul>
                     </div>
