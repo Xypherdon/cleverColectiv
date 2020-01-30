@@ -28,14 +28,20 @@ export default class LoginButtons extends Component {
     }
 
     attemptLogin(emailAddress, password, callback) {
+        console.log('attemtLogin inside');
         Meteor.call('users.login', emailAddress, password, (error, result) => {
-            if (error) console.log(error);
+            if (error) {
+                console.log('A intrat in error');
+                console.log(error);
+            }
+            console.log('users.login Result');
 
             callback(result);
         });
     }
 
     handleSubmit(event) {
+        console.log('this.props', this.props.currentUser);
         event.preventDefault();
         const emailAddress = ReactDOM.findDOMNode(
             this.refs.emailAddressInput
@@ -45,7 +51,10 @@ export default class LoginButtons extends Component {
             this.refs.passwordInput
         ).value.trim();
 
+        this.setState({ errorMessage: 'handleSubmit inside' });
+
         this.attemptLogin(emailAddress, password, result => {
+            console.log('attemtLogin result', result);
             if (result === 'user_locked') {
                 this.setState({
                     errorMessage: languages[this.state.language].user_locked,

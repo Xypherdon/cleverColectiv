@@ -41,6 +41,7 @@ body {
     margin-bottom: 5px;
     height: 30px;
     width: 100px;
+    cursor: pointer;
 }
 
 .user-details-span {

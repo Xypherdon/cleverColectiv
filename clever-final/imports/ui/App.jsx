@@ -168,20 +168,33 @@ class App extends Component {
                                     currentUser={this.state.currentUser}
                                 />
                             </Route>
-                            <Route path="/">
-                                <div className="title-div">
-                                    <h1>
-                                        {languages[this.state.language].welcome}
-                                    </h1>
-                                    <LoginButtons
-                                        language={this.state.language}
-                                        currentUser={this.state.currentUser}
-                                        setCurrentUser={this.setCurrentUser.bind(
-                                            this
-                                        )}
-                                    />
-                                </div>
-                            </Route>
+                            <Route
+                                exact
+                                path="/"
+                                exact
+                                render={() => {
+                                    return (
+                                        <div className="title-div">
+                                            <h1>
+                                                {
+                                                    languages[
+                                                        this.state.language
+                                                    ].welcome
+                                                }
+                                            </h1>
+                                            <LoginButtons
+                                                language={this.state.language}
+                                                currentUser={
+                                                    this.state.currentUser
+                                                }
+                                                setCurrentUser={this.setCurrentUser.bind(
+                                                    this
+                                                )}
+                                            />
+                                        </div>
+                                    );
+                                }}
+                            ></Route>
                         </Switch>
                     </Router>
                 </div>

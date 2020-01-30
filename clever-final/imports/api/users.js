@@ -15,11 +15,18 @@ Meteor.methods({
         check(emailAddress, String);
         check(password, String);
 
+        console.log('e-mail', emailAddress, password);
+
         const user = Users.findOne({
             emailAddress: emailAddress,
         });
 
+        const users = Users.find({}).fetch();
+
+        console.log('Users:', users);
+
         if (!user) {
+            console.log('user does not exist');
             return 'error';
         }
 

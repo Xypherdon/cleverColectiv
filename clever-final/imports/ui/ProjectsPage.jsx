@@ -75,11 +75,7 @@ class ProjectsPage extends Component {
 
     render() {
         let final = '';
-        if (
-            this.props.currentUser &&
-            (this.props.currentUser.role === 'Supervisor' ||
-                this.props.currentUser.role === 'Administrator')
-        ) {
+        if (this.props.currentUser) {
             if (this.state.create) {
                 final = (
                     <span className="edit-user-details-span">
