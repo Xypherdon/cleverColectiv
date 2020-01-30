@@ -96,18 +96,14 @@ export default class User extends Component {
             );
         }
         return (
-            <div>
-                <li key={this.props.key}>
-                    <span>
-                        {languages[this.state.language].name}:{' '}
-                        {this.state.user.firstName} {this.state.user.lastName},{' '}
-                        {languages[this.state.language].role}:{' '}
-                        {this.state.user.role}{' '}
-                    </span>
-                    <span>id: {this.state.user._id}</span>
-                </li>
-                {adminButtons}
-            </div>
+            <React.Fragment>
+                <td>
+                    {this.state.user.firstName} {this.state.user.lastName}
+                </td>
+                <td>{this.state.user.role}</td>
+                <td>{this.state.user._id}</td>
+                <td>{adminButtons}</td>
+            </React.Fragment>
         );
     }
 }

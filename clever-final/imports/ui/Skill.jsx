@@ -32,6 +32,16 @@ export default class Skill extends Component {
         this.setState({ redirect: true });
     }
 
+    renderSkills() {
+        let string = '';
+        if (this.state.user.skills) {
+            this.state.user.skills.forEach(skill => {
+                string += skill + ' ';
+            });
+        }
+        return string;
+    }
+
     render() {
         if (this.state.redirect) {
             history.push('/skills');
@@ -53,11 +63,14 @@ export default class Skill extends Component {
             }
 
             return (
-                <span>
-                    {this.state.user.firstName} {this.state.user.lastName}{' '}
-                    {this.state.user.role} {this.state.user.skills}
-                    <div>{previewButton}</div>
-                </span>
+                <React.Fragment>
+                    <td>
+                        {this.state.user.firstName} {this.state.user.lastName}
+                    </td>
+                    <td>{this.state.user.role}</td>
+                    <td>{this.renderSkills()}</td>
+                    {/* <td>{previewButton}</td> */}
+                </React.Fragment>
             );
         }
     }

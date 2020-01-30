@@ -4,10 +4,6 @@ import { Meteor } from 'meteor/meteor';
 import { Users } from '../api/users.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import languages from '../lang/languages.json';
-import ReactDOM from 'react-dom';
-import { Redirect } from 'react-router-dom';
-import history from '../router/history.js';
-import { Requests } from '../api/requests.js';
 
 export default class Request extends Component {
     constructor(props) {
@@ -75,12 +71,12 @@ export default class Request extends Component {
                 } else {
                 }
                 return (
-                    <div key={uniqueKey}>
+                    <React.Fragment key={uniqueKey}>
                         {languages[this.state.language][key]}:{' '}
                         {languages[this.state.language].old}:{' '}
                         {this.state.requestAuthor[key]}{' '}
                         {languages[this.state.language].new}: {value}
-                    </div>
+                    </React.Fragment>
                 );
             }
         );
@@ -90,42 +86,42 @@ export default class Request extends Component {
         let preview = '';
 
         if (this.state.preview) {
-            preview = <div className="preview-div">{this.renderPreview()}</div>;
+            preview = this.renderPreview();
         }
 
         return (
-            <li>
-                <span>
-                    {languages[this.state.language].name}{' '}
+            <React.Fragment>
+                <td>
                     {this.state.requestAuthor.firstName}{' '}
                     {this.state.requestAuthor.lastName}
-                </span>
-                <span>
+                </td>
+
+                <td>
                     <button
                         className="form-input-submit"
                         onClick={this.handleAccept.bind(this)}
                     >
                         {languages[this.state.language].accept}
                     </button>
-                </span>
-                <span>
+                </td>
+                <td>
                     <button
                         className="form-input-submit"
                         onClick={this.handleRefuse.bind(this)}
                     >
                         {languages[this.state.language].refuse}
                     </button>
-                </span>
-                <span>
+                </td>
+                <td>
                     <button
                         className="form-input-submit"
                         onClick={this.handlePreview.bind(this)}
                     >
                         {languages[this.state.language].preview}
                     </button>
-                </span>
-                {preview}
-            </li>
+                </td>
+                <td>{preview}</td>
+            </React.Fragment>
         );
     }
 }

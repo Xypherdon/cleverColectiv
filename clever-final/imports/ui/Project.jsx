@@ -193,21 +193,16 @@ export default class Project extends Component {
                     );
                 }
                 final = (
-                    <li key={this.state.project._id}>
-                        <span>
-                            {languages[this.state.language].projectName}:{' '}
-                            {this.state.project.projectName},{' '}
-                            {languages[this.state.language].customer}:{' '}
-                            {this.state.project.customer},{' '}
-                            {languages[this.state.language].industry}:{' '}
-                            {this.state.project.industry}{' '}
-                        </span>
-                        <span>id: {this.state.project._id}</span>
-                        <div>
-                            {editProjectButton}
-                            {joinProjectButton}
-                        </div>
-                    </li>
+                    <React.Fragment key={this.state.project._id}>
+                        <tr>
+                            <td>{this.state.project.projectName}</td>
+                            <td>{this.state.project.customer}</td>
+                            <td>{this.state.project.industry}</td>
+                            <td>{this.state.project._id}</td>
+                            <td>{editProjectButton}</td>
+                            <td>{joinProjectButton}</td>
+                        </tr>
+                    </React.Fragment>
                 );
             }
 

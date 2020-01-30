@@ -50,20 +50,39 @@ class RequestsPage extends Component {
                 );
             }
 
-            return pendingRequests.map(request => {
-                let requestAuthor = this.props.users.find(
-                    user => user._id === request.userId
-                );
+            return (
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>{languages[this.state.language].name}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {pendingRequests.map(request => {
+                                let requestAuthor = this.props.users.find(
+                                    user => user._id === request.userId
+                                );
 
-                return (
-                    <Request
-                        key={request._id}
-                        request={request}
-                        requestAuthor={requestAuthor}
-                        language={this.state.language}
-                    />
-                );
-            });
+                                return (
+                                    <tr key={request._id}>
+                                        <Request
+                                            key={request._id}
+                                            request={request}
+                                            requestAuthor={requestAuthor}
+                                            language={this.state.language}
+                                        />
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+            );
         }
 
         let filteredRequests = this.props.requests.filter(
@@ -80,20 +99,39 @@ class RequestsPage extends Component {
             );
         }
 
-        return filteredRequests.map(request => {
-            let requestAuthor = this.props.users.find(
-                user => user._id === request.userId
-            );
+        return (
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>{languages[this.state.language].name}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredRequests.map(request => {
+                            let requestAuthor = this.props.users.find(
+                                user => user._id === request.userId
+                            );
 
-            return (
-                <Request
-                    key={request._id}
-                    request={request}
-                    requestAuthor={requestAuthor}
-                    language={this.state.language}
-                />
-            );
-        });
+                            return (
+                                <tr key={request._id}>
+                                    <Request
+                                        key={request._id}
+                                        request={request}
+                                        requestAuthor={requestAuthor}
+                                        language={this.state.language}
+                                    />
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        );
     }
 
     render() {
@@ -103,11 +141,7 @@ class RequestsPage extends Component {
             (this.props.currentUser.role === 'Administrator' ||
                 this.props.currentUser.role === 'Supervisor')
         ) {
-            return (
-                <div>
-                    <ul>{this.renderRequests()}</ul>
-                </div>
-            );
+            return <div>{this.renderRequests()}</div>;
         } else if (this.props.currentUser) {
             return <Redirect to={`/profile/${this.props.currentUser._id}`} />;
         } else {

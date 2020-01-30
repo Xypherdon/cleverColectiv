@@ -75,13 +75,13 @@ class SkillsPage extends Component {
 
     renderUsers() {
         return this.state.users.map(user => (
-            <li key={user._id}>
+            <tr key={user._id}>
                 <Skill
                     language={this.state.language}
                     user={user}
                     currentUser={this.props.currentUser}
                 />
-            </li>
+            </tr>
         ));
     }
 
@@ -140,7 +140,22 @@ class SkillsPage extends Component {
                                 languages[this.state.language].searchSkill
                             }
                         />
-                        <ul>{this.renderUsers()}</ul>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        {languages[this.state.language].name}
+                                    </th>
+                                    <th>
+                                        {languages[this.state.language].role}
+                                    </th>
+                                    <th>
+                                        {languages[this.state.language].skills}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>{this.renderUsers()}</tbody>
+                        </table>
                     </div>
                 </span>
                 <span className="skill-page-right">

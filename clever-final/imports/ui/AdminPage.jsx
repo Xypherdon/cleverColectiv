@@ -42,12 +42,14 @@ class AdminPage extends Component {
 
     renderUsers() {
         return this.props.users.map((user, key) => (
-            <User
-                language={this.state.language}
-                user={user}
-                currentUser={this.props.currentUser}
-                key={key}
-            />
+            <tr key={key}>
+                <User
+                    language={this.state.language}
+                    user={user}
+                    currentUser={this.props.currentUser}
+                    key={key}
+                />
+            </tr>
         ));
     }
 
@@ -280,8 +282,21 @@ class AdminPage extends Component {
                         >
                             {languages[this.state.language].projects}
                         </button>
-
-                        <ul>{this.renderUsers()}</ul>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        {languages[this.state.language].name}
+                                    </th>
+                                    <th>
+                                        {languages[this.state.language].role}
+                                    </th>
+                                    <th>id</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>{this.renderUsers()}</tbody>
+                        </table>
                     </div>
                 );
             }

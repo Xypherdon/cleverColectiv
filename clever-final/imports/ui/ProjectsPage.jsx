@@ -143,8 +143,19 @@ class ProjectsPage extends Component {
                         >
                             {languages[this.state.language].createProject}
                         </button>
-
-                        <ul>{this.renderProjects()}</ul>
+                        <table>
+                            <thead>
+                                <tr className="table-head">
+                                    <th>Project Name</th>
+                                    <th>Customer</th>
+                                    <th>Industry</th>
+                                    <th>id</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>{this.renderProjects()}</tbody>
+                        </table>
                     </div>
                 );
             }
