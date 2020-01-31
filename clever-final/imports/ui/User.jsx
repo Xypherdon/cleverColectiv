@@ -58,7 +58,7 @@ class User extends Component {
 
         Meteor.call(
             'users.update',
-            { emailAddress: emailAddress },
+            { emailAddress: this.state.user.emailAddress },
             {
                 emailAddress,
                 password,

@@ -165,7 +165,7 @@ class ProfilePage extends Component {
                     Meteor.call('users.update', user._id, request);
                     Meteor.call('pictures.upsert', profilePicture);
                 } else {
-                    request.profilePicture = true;
+                    request.profilePicture = profilePicture;
                     Meteor.call('requests.insert', request, user);
                 }
             };
