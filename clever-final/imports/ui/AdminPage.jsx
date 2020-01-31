@@ -109,6 +109,18 @@ class AdminPage extends Component {
         this.setState({ redirect: to });
     }
 
+    renderSupervisors() {
+        return this.props.users.map(user => {
+            if (user.role === 'Supervisor') {
+                return (
+                    <option value={user._id}>
+                        {user.firstName} {user.lastName}
+                    </option>
+                );
+            }
+        });
+    }
+
     render() {
         if (
             this.props.currentUser &&
@@ -158,15 +170,23 @@ class AdminPage extends Component {
                                 />
                             </div>
                             <div>
-                                <input
-                                    ref="supervisorIdInput"
-                                    className="form-input"
-                                    type="text"
-                                    placeholder={
+                                <select
+                                    name={
                                         languages[this.state.language]
                                             .supervisorId
                                     }
-                                />
+                                    ref="supervisorIdInput"
+                                    className="form-input"
+                                    type="text"
+                                >
+                                    <option value="">
+                                        {
+                                            languages[this.state.language]
+                                                .noSupervisor
+                                        }
+                                    </option>
+                                    {this.renderSupervisors()}
+                                </select>
                             </div>
                             <div>
                                 <input
@@ -189,14 +209,20 @@ class AdminPage extends Component {
                                 />
                             </div>
                             <div>
-                                <input
+                                <select
+                                    name={languages[this.state.language].role}
                                     ref="roleInput"
                                     className="form-input"
                                     type="text"
-                                    placeholder={
-                                        languages[this.state.language].role
-                                    }
-                                />
+                                >
+                                    <option value="Employee">Employee</option>
+                                    <option value="Supervisor">
+                                        Supervisor
+                                    </option>
+                                    <option value="Administrator">
+                                        Administrator
+                                    </option>
+                                </select>
                             </div>
                             <div>
                                 <input

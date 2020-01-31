@@ -46,7 +46,8 @@
         "deletePicture": "Delete picture",
         "projectExperience": "Project Experience",
         "downloadAsPDF": "Download PDF",
-        "profilePictureChanged": "Profile picture changed"
+        "profilePictureChanged": "Profile picture changed",
+        "noSupervisor": "No Supervisor"
     },
     "german": {
         "welcome": "Wilkommen zu Clever!",
@@ -96,7 +97,8 @@
         "deletePicture": "Bild loschen",
         "projectExperience": "Projekt Erfahrung",
         "downloadAsPDF": "PDF herunterladen",
-        "profilePictureChanged": "Bild geandert"
+        "profilePictureChanged": "Bild geandert",
+        "noSupervisor": "Kein Supervisor"
     },
     "romanian": {
         "welcome": "Bine ati venit la Clever!",
@@ -146,6 +148,7 @@
         "deletePicture": "Sterge poza",
         "projectExperience": "Experienta pe proiecte",
         "downloadAsPDF": "Descarca PDF",
-        "profilePictureChanged": "Poza de profil schimbata"
+        "profilePictureChanged": "Poza de profil schimbata",
+        "noSupervisor": "Fara Supervisor"
     }
 }
